@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RollView: View {
-    var sides: Int
-    var numberOfRolls: Int
+    var numberOfDice: Int
+    var numberOfSides: Int
     @State private var rollOutcomes = [Int]()
     @State private var total: Int = 0
     let columns = [
@@ -20,7 +20,10 @@ struct RollView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(rollOutcomes.indices, id: \.self) { index in
-                        Text("roll \(index): \(rollOutcomes[index])")
+                        VStack{
+                            Text("Dice \(index + 1)")
+                            Text("\(rollOutcomes[index])")
+                        }
                     }
                 }
             }
@@ -37,8 +40,8 @@ struct RollView: View {
     }
     
     func rollDice() {
-        for _ in 1...numberOfRolls {
-            rollOutcomes.append(Int.random(in: 1...sides))
+        for _ in 1...numberOfDice {
+            rollOutcomes.append(Int.random(in: 1...numberOfSides))
         }
     }
     
@@ -48,5 +51,5 @@ struct RollView: View {
 }
 
 #Preview {
-    RollView(sides: 6, numberOfRolls: 3)
+    RollView(numberOfDice: 2, numberOfSides: 3)
 }
